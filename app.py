@@ -141,7 +141,7 @@ def load_user(user_id):
         return User(user[0], user[1], user[2], user[3], user[4])
     return None
 
-@app.route('/')
+@app.route('/index')
 def index():
     return render_template('index.html')
 
