@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+    </style>
+    <title>Add Blood Unit - Blood Bank System</title>
+</head>
+<body class="data-page">
+    <div class="form-container">
+        <h2 class="text-center mb-4">Add Blood Unit to Inventory</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'danger' else 'success' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="blood_type">Blood Type *</label>
+                <select class="form-control" id="blood_type" name="blood_type" required>
+                    <option value="">Select Blood Type</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="donor_id">Donor (Optional)</label>
+                <select class="form-control" id="donor_id" name="donor_id">
+                    <option value="">Select Donor (if applicable)</option>
+                    {% for donor in donors %}
+                        <option value="{{ donor[0] }}">{{ donor[1] }} ({{ donor[2] }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="units">Number of Units *</label>
+                <input type="number" class="form-control" id="units" name="units" min="1" max="10" value="1" required>
+                <small class="form-text text-muted">Each unit represents one blood bag (typically 450ml)</small>
+            </div>
+
+            <div class="form-group">
+                <label for="storage_location">Storage Location</label>
+                <select class="form-control" id="storage_location" name="storage_location">
+                    <option value="Main Storage">Main Storage</option>
+                    <option value="Emergency Reserve">Emergency Reserve</option>
+                    <option value="Pediatric Unit">Pediatric Unit</option>
+                    <option value="Surgery Department">Surgery Department</option>
+                </select>
+            </div>
+
+            <div class="alert alert-info">
+                <strong>Note:</strong> Blood units will automatically expire 42 days from the donation date.
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-lg">Add to Inventory</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg ml-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

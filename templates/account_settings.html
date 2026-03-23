@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .settings-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .security-section {
+            border-left: 4px solid #007bff;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <title>Account Settings - Blood Bank System</title>
+</head>
+<body class="profile-page">
+    <div class="settings-container">
+        <h2 class="text-center mb-4">Account Settings</h2>
+        <p class="text-center text-muted">Manage your account security and preferences</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'danger' else 'success' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">🔐 Change Password</h5>
+                        <p class="text-muted">Update your account password regularly for security.</p>
+                        <form method="POST">
+                            <div class="form-group">
+                                <label for="new_password">New Password</label>
+                                <input type="password" class="form-control" id="new_password" name="new_password"
+                                       placeholder="Enter new password" required>
+                                <small class="form-text text-muted">
+                                    Password must be at least 6 characters long
+                                </small>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Update Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">🔒 Two-Factor Authentication</h5>
+                        <p class="text-muted">Enhance your account security with 2FA.</p>
+                        <div class="alert alert-info">
+                            <strong>Current Status:</strong> 2FA is enabled for your account.
+                        </div>
+                        <form method="POST">
+                            <button type="submit" name="regenerate_mfa" class="btn btn-warning btn-block">
+                                🔄 Regenerate MFA Secret
+                            </button>
+                            <small class="form-text text-muted">
+                                This will create a new QR code. You'll need to scan it again with your authenticator app.
+                            </small>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">🛡️ Security Recommendations</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="security-section">
+                            <h6>Password Security</h6>
+                            <ul class="list-unstyled">
+                                <li>✅ Use strong passwords</li>
+                                <li>✅ Change password regularly</li>
+                                <li>✅ Don't reuse passwords</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="security-section">
+                            <h6>Two-Factor Authentication</h6>
+                            <ul class="list-unstyled">
+                                <li>✅ Use authenticator apps</li>
+                                <li>✅ Keep backup codes safe</li>
+                                <li>✅ Enable on all accounts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('profile') }}" class="btn btn-secondary">Back to Profile</a>
+            <a href="{{ url_for('index') }}" class="btn btn-primary ml-2">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

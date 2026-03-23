@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .navbar-custom {
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+        }
+    </style>
+    <title>Blood Bank Management System</title>
+</head>
+<body class="home-page">
+    <div class="navbar-custom">
+        <h1>Welcome to the Blood Bank Management System</h1>
+        <div>
+            {% if current_user.is_authenticated %}
+                <span>Logged in as: <strong>{{ current_user.username }}</strong></span> | 
+                {% if current_user.is_admin %}
+                    <a href="{{ url_for('admin_users') }}" class="btn btn-sm btn-danger">Admin Panel</a>
+                {% endif %}
+                <a href="{{ url_for('profile') }}" class="btn btn-sm btn-primary">Profile</a>
+                <a href="{{ url_for('account_settings') }}" class="btn btn-sm btn-info">Account Settings</a>
+                <a href="{{ url_for('donors') }}" class="btn btn-sm btn-success">Donors</a>
+                <a href="{{ url_for('add_patient') }}" class="btn btn-sm btn-warning">Add Patient</a>
+                <a href="{{ url_for('patients') }}" class="btn btn-sm btn-info">View Patients</a>
+                <a href="{{ url_for('add_blood_unit') }}" class="btn btn-sm btn-danger">Add Blood</a>
+                <a href="{{ url_for('blood_inventory') }}" class="btn btn-sm btn-secondary">Blood Inventory</a>
+                <a href="{{ url_for('blood_transactions') }}" class="btn btn-sm btn-dark">Transactions</a>
+                <a href="{{ url_for('logout') }}" class="btn btn-sm btn-light">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-sm btn-primary">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-sm btn-success">Register</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'danger' if category == 'danger' else 'success' }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        
+        {% if current_user.is_authenticated and current_user.is_admin %}
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h5>Admin Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>As an admin, you can manage users, donors, patients, and blood inventory.</p>
+                        <a href="{{ url_for('admin_users') }}" class="btn btn-danger">Manage Users</a>
+                        <a href="{{ url_for('donors') }}" class="btn btn-success">View Donors</a>
+                        <a href="{{ url_for('patients') }}" class="btn btn-warning">View Patients</a>
+                        <a href="{{ url_for('blood_inventory') }}" class="btn btn-info">Blood Inventory</a>
+                        <a href="{{ url_for('blood_transactions') }}" class="btn btn-secondary">Transactions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* Home Page Background */
+body.home-page {
+    background-image: url('https://logodix.com/logo/418830.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Login Page Background */
+body.login-page {
+    background-image: url('https://img.freepik.com/premium-vector/happy-world-blood-donor-day-red-white-grey-background-social-media-design-banner-free-vector_1340-21614.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Register Page Background */
+body.register-page {
+    background-image: url('https://tse3.mm.bing.net/th/id/OIP.wh-5Ns-4j6QDJmjaQ5yKBAHaC-?rs=1&pid=ImgDetMain&o=7&rm=3');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Admin Pages Background */
+body.admin-page {
+    background-image: url('https://img.freepik.com/premium-vector/infographic-blood-donation-with-sharing-human-various-blood-groups-example-texts-red-gradient-background-poster-infographic-world-blood-donor-day-campaign-vector-design_36555-947.jpg?w=1060');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Profile and Account Pages Background */
+body.profile-page {
+    background-image: url('https://www.shutterstock.com/shutterstock/photos/2226401135/display_1500/stock-vector-abo-blood-groups-four-blood-types-a-b-ab-and-o-groups-made-up-from-combinations-of-the-type-a-2226401135.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Donor/Patient/Blood Pages Background */
+body.data-page {
+    background-image: url('https://cdn2.slidemodel.com/wp-content/uploads/7268-02-blood-bank-powerpoint-template-16x9-3-320x180.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Default for other pages */
+body.default-page {
+    background-image: url('https://thumbs.dreamstime.com/b/blood-donation-209359912.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.container, .admin-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+h1, h2, h5 {
+    color: #d63031;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+button, .btn {
+    background-color: #e17055 !important;
+    border-color: #e17055 !important;
+    transition: all 0.3s ease;
+}
+
+button:hover, .btn:hover {
+    background-color: #d63031 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background: linear-gradient(45deg, #ff7675, #fd79a8);
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.alert {
+    border-radius: 10px;
+}
+
+.navbar-custom {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-bottom: 2px solid #e17055 !important;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+form {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+label {
+    color: #d63031;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    border: 2px solid #e17055;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #d63031;
+    outline: none;
+    box-shadow: 0 0 5px rgba(214, 48, 49, 0.5);
+}
+
+a {
+    color: #e17055;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #d63031;
+}

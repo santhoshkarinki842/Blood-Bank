@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+    </style>
+    <title>Add Patient - Blood Bank System</title>
+</head>
+<body class="data-page">
+    <div class="form-container">
+        <h2 class="text-center mb-4">Register New Patient</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'danger' else 'success' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="age">Age *</label>
+                        <input type="number" class="form-control" id="age" name="age" min="1" max="120" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="blood_type">Blood Type *</label>
+                        <select class="form-control" id="blood_type" name="blood_type" required>
+                            <option value="">Select Blood Type</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="required_blood_units">Required Blood Units *</label>
+                        <input type="number" class="form-control" id="required_blood_units" name="required_blood_units" min="1" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contact">Contact Number *</label>
+                <input type="tel" class="form-control" id="contact" name="contact" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea class="form-control" id="address" name="address" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="medical_condition">Medical Condition</label>
+                <textarea class="form-control" id="medical_condition" name="medical_condition" rows="3" placeholder="Describe the medical condition requiring blood transfusion"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="urgency_level">Urgency Level *</label>
+                <select class="form-control" id="urgency_level" name="urgency_level" required>
+                    <option value="">Select Urgency Level</option>
+                    <option value="Critical">Critical (Immediate)</option>
+                    <option value="High">High (Within 24 hours)</option>
+                    <option value="Medium">Medium (Within 3 days)</option>
+                    <option value="Low">Low (Within a week)</option>
+                </select>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">Register Patient</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary btn-lg ml-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

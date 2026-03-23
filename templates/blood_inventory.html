@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .inventory-container {
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+        .expiring-soon {
+            background-color: #fff3cd !important;
+        }
+        .expired {
+            background-color: #f8d7da !important;
+        }
+    </style>
+    <title>Blood Inventory - Blood Bank System</title>
+</head>
+<body class="data-page">
+    <div class="inventory-container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Blood Inventory Management</h2>
+            <a href="{{ url_for('add_blood_unit') }}" class="btn btn-success">Add Blood Unit</a>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'danger' else 'success' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Inventory Summary -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Inventory Summary</h5>
+                <div class="row">
+                    {% for blood_type, count in summary %}
+                        <div class="col-md-3 mb-3">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h3 class="text-danger">{{ count }}</h3>
+                                    <h6>{{ blood_type }} Units</h6>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Expiring Blood Alert -->
+        {% if expiring_blood %}
+        <div class="alert alert-warning">
+            <h5>⚠️ Blood Expiring Soon (within 7 days)</h5>
+            <ul>
+                {% for blood in expiring_blood %}
+                    <li>{{ blood[1] }} - Expires: {{ blood[4] }} - Location: {{ blood[6] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Detailed Inventory -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Detailed Blood Inventory</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Blood Type</th>
+                                <th>Donor</th>
+                                <th>Donation Date</th>
+                                <th>Expiry Date</th>
+                                <th>Status</th>
+                                <th>Storage Location</th>
+                                <th>Days Left</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if inventory %}
+                                {% for item in inventory %}
+                                <tr class="{% if item[9] <= 7 %}expiring-soon{% elif item[9] < 0 %}expired{% endif %}">
+                                    <td>{{ item[0] }}</td>
+                                    <td><span class="badge badge-danger">{{ item[1] }}</span></td>
+                                    <td>{{ item[8] or 'Anonymous' }}</td>
+                                    <td>{{ item[3] }}</td>
+                                    <td>{{ item[4] }}</td>
+                                    <td>
+                                        {% if item[5] == 'available' %}
+                                            <span class="badge badge-success">Available</span>
+                                        {% elif item[5] == 'issued' %}
+                                            <span class="badge badge-primary">Issued</span>
+                                        {% else %}
+                                            <span class="badge badge-secondary">{{ item[5] }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ item[7] }}</td>
+                                    <td>
+                                        {% if item[9] > 0 %}
+                                            <span class="text-success">{{ item[9] }} days</span>
+                                        {% elif item[9] == 0 %}
+                                            <span class="text-warning">Expires today</span>
+                                        {% else %}
+                                            <span class="text-danger">Expired</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">No blood units in inventory.</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
+            <a href="{{ url_for('blood_transactions') }}" class="btn btn-info ml-2">View Transactions</a>
+        </div>
+    </div>
+</body>
+</html>
